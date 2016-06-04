@@ -49,11 +49,11 @@ body {
 .my-math-input .mq-cursor {
   transition: opacity 250ms;
   opacity: 0.6;
-  border-left: 2px solid #00BDFC;
+  border-left-color: #00BDFC;
   /*border-right: 1px solid #00BDFC;*/
-  margin-left: -2px;
+  /*margin-left: 1px;*/
   /*margin-right: -1px;*/
-  transform: scaleY(1.5);
+  transform: scale(2.5, 1.5);
 }
 
 .my-math-input .mq-cursor.mq-blink {
