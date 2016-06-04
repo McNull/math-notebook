@@ -1,5 +1,6 @@
 {
   "name": "math-notebook",
+  "productName": "Math Notebook",
   "version": "0.1.0",
   "description": "Math expression notebook",
   "main": "main.js",

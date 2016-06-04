@@ -1,12 +1,16 @@
 const electron = require('electron');
-const { app, BrowserWindow } = electron;
+const { app, BrowserWindow, Menu } = electron;
 const electronLocalshortcut = require('electron-localshortcut');
+
+//app.setName('Math Notebook');
 
 let mainWindow;
 
-
+Menu.setApplicationMenu((Menu.buildFromTemplate([])));
 
 function createMainWindow() {
+
+
   
   mainWindow = new BrowserWindow({
     minWidth: 320,
