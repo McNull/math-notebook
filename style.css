@@ -1,0 +1,66 @@
+/*html, body {
+  height: 100%;
+}*/
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+body {
+  background-color: #F2F2F2;
+  color: #333;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+.my-math-input {
+  transition: opacity 500ms;
+  opacity: 0.6;
+  border: none;
+  background: none;
+  width: 100%;
+}
+
+.my-math-input:hover {
+  opacity: 0.8;
+}
+
+.my-math-input.mq-focused, .my-math-input .mq-text-mode.mq-hasCursor {
+  opacity: 1.0;
+  box-shadow: none;
+  border: none;
+}
+
+.my-math-input .mq-scaled, .my-math-input .mq-non-leaf {
+  transition: transform 250ms, background-color 250ms;
+}
+
+ 
+
+/*::selection {
+  background-color: #B5E4F4;
+}*/
+
+.my-math-input .mq-cursor {
+  transition: opacity 250ms;
+  opacity: 0.6;
+  border-left: 2px solid #00BDFC;
+  /*border-right: 1px solid #00BDFC;*/
+  margin-left: -2px;
+  /*margin-right: -1px;*/
+  transform: scaleY(1.5);
+}
+
+.my-math-input .mq-cursor.mq-blink {
+  visibility: visible;
+  opacity: 0.0;
+}
+
+.my-math-input .mq-matrixed {
+  background: none;
+}

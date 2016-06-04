@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Math Notebook</title>
-    <link rel="stylesheet" href="./lib/mathquill/mathquill.css">
-    <script>
-      window.$ = window.jQuery = require('jquery');
-    </script>
-    <script src="node_modules/angular/angular.js"></script>
-    <script src="./lib/mathquill/mathquill.js"></script>
-    <script src="./app.js"></script>
-  </head>
 
-  <body>
-    
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi sunt quidem veniam dolore quae expedita ullam reprehenderit quisquam tempora porro, minima quod, recusandae necessitatibus ut quibusdam sit, id officiis dolor.
-    
-  </body>
+<head>
+  <title>Math Notebook</title>
+  <link rel="stylesheet" href="./lib/mathquill/mathquill.css">
+  <link rel="stylesheet" href="./style.css">
+  <script>
+    window.$ = window.jQuery = require('jquery');
+  </script>
+  <script src="node_modules/angular/angular.js"></script>
+  <script src="./lib/mathquill/mathquill.js"></script>
+  <script src="./app.js"></script>
+</head>
+
+<body ng-app='myApp'>
+
+
+  <div class="container" ng-controller="MyController">
+
+    <!--<div class="my-math-input mq-editable-field">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, alias, aperiam expedita illo beatae blanditiis dolorem sint maxime harum minima perferendis deleniti mollitia. Tempore illum laudantium laboriosam vel eaque et!</p>
+          <p>Lorem ipsum dolor sit amet, consectetur <span class="mq-cursor"></span>adipisicing elit. Exercitationem, laborum quisquam deserunt obcaecati delectus excepturi earum veniam aliquam omnis quia nemo nisi quibusdam minima voluptatum corrupti! Minus quidem nisi consectetur.</p>
+      </div>
+       -->
+
+    <p ng-repeat="field in fields">
+      <mq-mathfield class="my-math-input" ng-model="field" on-enter-key="onEnterKey(field)" on-move-out="onMoveOut(field, direction)"
+        on-delete-out="onDeleteOut(field, direction)" on-focus-change="onFocusChange(field, hasFocus)"></mq-mathfield>
+    </p>
+
+    <!--<pre><code>{{ fields | json }}</code></pre>-->
+  </div>
+
+</body>
+
 </html>

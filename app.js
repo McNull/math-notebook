@@ -7,9 +7,40 @@
 // Code goes here
 
 
-var app = angular.module('myApp', ['mathquill']);
 
-app.controller('MyController', function ($scope) {
+
+//   console.log('ready');
+
+//   // const electronLocalshortcut = require('electron-localshortcut');
+    
+//   // electronLocalshortcut.register(win, 'Ctrl+A', () => {
+//   //  console.log('You pressed ctrl & A');
+//   // });
+
+
+const electron = require('electron');
+const { ipcRenderer, webFrame } = electron;
+
+ipcRenderer.on('zoomIn', () => {
+  webFrame.setZoomLevel(webFrame.getZoomLevel()+1);
+});
+
+ipcRenderer.on('zoomOut', () => {
+  webFrame.setZoomLevel(webFrame.getZoomLevel()-1);
+});
+
+
+// webFrame.setZoomFactor(2);
+
+// document.onkeydown = (e) => {
+//   console.log(e);
+// };
+
+
+var myApp = angular.module('myApp', ['mathquill']);
+
+myApp.controller('MyController', function ($scope, $window, $timeout) {
+
 
   var fields = JSON.parse(localStorage.getItem('mathquill-fields')) || [{
     expression: '\\sum_{k=1}^3\\sqrt{\\left(k+k\\right)^2}'
@@ -91,124 +122,147 @@ app.controller('MyController', function ($scope) {
 
   };
 
+
+  $scope.onFocusChange = (field, hasFocus) => {
+    if (hasFocus) {
+      lastFocus = field;
+    }
+  };
+
+  let lastFocus = null;
+
+  $($window).focus(() => {
+    if (lastFocus) {
+      $timeout(() => {
+        lastFocus.focus = true;
+      });
+    }
+  });
+
 });
 
 
+var MQ = MathQuill.getInterface(2);
 
+var mod = angular.module('mathquill', []);
 
+mod.directive('mqMathfield', function ($timeout, $compile) {
 
-  var MQ = MathQuill.getInterface(2);
+  return {
+    scope: {
+      field: '=ngModel',
+      onEnterKey: '&?',
+      onFocusChange: '&?', /* hasFocus: boolean */
+      onMoveOut: '&?', /* direction: = 0: up | 1: right | 2: down | 3: left */
+      onDeleteOut: '&?' /* direction: -1: left | 1: right */
+    },
+    restrict: 'AE',
+    link: function ($scope, $element, $attrs) {
 
-  var mod = angular.module('mathquill', []);
+      $scope._focusChanged = (x) => {
+        $scope.field.focus = x;
 
-  mod.directive('mqMathfield', function ($timeout, $compile) {
-
-    return {
-      scope: {
-        field: '=ngModel',
-        onEnterKey: '&?',
-        onMoveOut: '&?' /* direction: = 0: up | 1: right | 2: down | 3: left */,
-        onDeleteOut: '&?' /* direction: -1: left | 1: right */
-      },
-      restrict: 'AE',
-      link: function ($scope, $element, $attrs) {
-
-        function substituteTextarea() {
-          var $textArea = $('<textarea autocapitalize=off autocomplete=off autocorrect=off ' +
-            'spellcheck=false x-palm-disable-ste-all=true ' +
-            'ng-blur="field.focus = false" ng-focus="field.focus = true" />');
-
-          return $compile($textArea)($scope)[0];
+        if ($scope.onFocusChange) {
+          $scope.onFocusChange({
+            hasFocus: x
+          });
         }
+      };
 
-        function handleMoveOutOf(direction) {
-          if ($scope.onMoveOut) {
-            $timeout(function () {
-              $scope.onMoveOut({
-                direction: direction
-              });
+      function substituteTextarea() {
+        var $textArea = $('<textarea autocapitalize=off autocomplete=off autocorrect=off ' +
+          'spellcheck=false x-palm-disable-ste-all=true ' +
+          'ng-blur="_focusChanged(false)" ng-focus="_focusChanged(true)" />');
+
+        return $compile($textArea)($scope)[0];
+      }
+
+      function handleMoveOutOf(direction) {
+        if ($scope.onMoveOut) {
+          $timeout(function () {
+            $scope.onMoveOut({
+              direction: direction
             });
-          }
+          });
         }
+      }
 
-        var mathfield = MQ.MathField($element[0], {
+      var mathfield = MQ.MathField($element[0], {
 
-          substituteTextarea: substituteTextarea,
+        substituteTextarea: substituteTextarea,
 
-          handlers: {
+        handlers: {
 
-            deleteOutOf: function (direction) {
-              if ($scope.onDeleteOut) {
-                $timeout(function () {
-                  $scope.onDeleteOut({
-                    direction: direction
-                  });
+          deleteOutOf: function (direction) {
+            if ($scope.onDeleteOut) {
+              $timeout(function () {
+                $scope.onDeleteOut({
+                  direction: direction
                 });
-              }
-            },
-
-            moveOutOf: function (direction) {
-              if (direction === -1) { // left
-                direction = 3;
-              }
-
-              handleMoveOutOf(direction);
-            },
-            upOutOf: function () {
-              handleMoveOutOf(0);
-            },
-            downOutOf: function () {
-              handleMoveOutOf(2);
-            },
-            enter: function () {
-              if ($scope.onEnterKey) {
-                $timeout($scope.onEnterKey);
-              }
-            },
-            edit: function () {
-              var latex = mathfield.latex();
-
-              (function (latex) {
-                if (latex !== $scope.field.expression) {
-                  $timeout(function () {
-                    $scope.field.expression = latex;
-                  });
-                }
-              })(latex);
+              });
             }
-          }
-        });
+          },
 
-        $scope.$watch('field.expression', function (x) {
+          moveOutOf: function (direction) {
+            if (direction === -1) { // left
+              direction = 3;
+            }
 
-          if (x !== undefined) {
-
+            handleMoveOutOf(direction);
+          },
+          upOutOf: function () {
+            handleMoveOutOf(0);
+          },
+          downOutOf: function () {
+            handleMoveOutOf(2);
+          },
+          enter: function () {
+            if ($scope.onEnterKey) {
+              $timeout($scope.onEnterKey);
+            }
+          },
+          edit: function () {
             var latex = mathfield.latex();
 
-            if (latex !== x) {
-              mathfield.latex(x);
-            }
+            (function (latex) {
+              if (latex !== $scope.field.expression) {
+                $timeout(function () {
+                  $scope.field.expression = latex;
+                });
+              }
+            })(latex);
           }
+        }
+      });
 
-        });
+      $scope.$watch('field.expression', function (x) {
 
-        $scope.$watch('field.focus', function (x) {
+        if (x !== undefined) {
 
-          if (x) {
-            mathfield.focus();
-          } else {
-            mathfield.blur();
+          var latex = mathfield.latex();
+
+          if (latex !== x) {
+            mathfield.latex(x);
           }
+        }
 
-        });
+      });
 
-        $scope.$on('$destroy', function () {
-          mathfield.revert();
-        });
-      }
-    };
+      $scope.$watch('field.focus', function (x) {
+        if (x) {
+          mathfield.focus();
+        } else {
+          mathfield.blur();
+        }
+      });
 
-  });
+      $scope.$on('$destroy', function () {
+        mathfield.revert();
+      });
+    }
+  };
+
+});
 
 
 
