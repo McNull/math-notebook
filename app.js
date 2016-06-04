@@ -12,7 +12,7 @@
 //   console.log('ready');
 
 //   // const electronLocalshortcut = require('electron-localshortcut');
-    
+
 //   // electronLocalshortcut.register(win, 'Ctrl+A', () => {
 //   //  console.log('You pressed ctrl & A');
 //   // });
@@ -22,11 +22,11 @@ const electron = require('electron');
 const { ipcRenderer, webFrame } = electron;
 
 ipcRenderer.on('zoomIn', () => {
-  webFrame.setZoomLevel(webFrame.getZoomLevel()+1);
+  webFrame.setZoomLevel(webFrame.getZoomLevel() + 1);
 });
 
 ipcRenderer.on('zoomOut', () => {
-  webFrame.setZoomLevel(webFrame.getZoomLevel()-1);
+  webFrame.setZoomLevel(webFrame.getZoomLevel() - 1);
 });
 
 
@@ -54,6 +54,10 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
 
   $scope.saveAll = function () {
     localStorage.setItem('mathquill-fields', JSON.stringify(fields));
+  };
+
+  $window.onbeforeunload = () => {
+    $scope.saveAll();
   };
 
   $scope.deleteAll = function () {
