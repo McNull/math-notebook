@@ -1,6 +1,6 @@
-/*html, body {
+html, body {
   height: 100%;
-}*/
+}
 
 html {
   box-sizing: border-box;
@@ -54,9 +54,10 @@ body {
   /*margin-left: 1px;*/
   /*margin-right: -1px;*/
   transform: scale(2.5, 1.5);
+  width: 1px;
+  left:1px;
 }
-
-.my-math-input .mq-cursor.mq-blink {
+.my-math-input.mq-editable-field .mq-cursor.mq-blink {
   visibility: visible;
   opacity: 0.0;
 }

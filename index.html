@@ -19,15 +19,15 @@
   <div class="container" ng-controller="MyController">
 
     <!--<div class="my-math-input mq-editable-field">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste, alias, aperiam expedita illo beatae blanditiis dolorem sint maxime harum minima perferendis deleniti mollitia. Tempore illum laudantium laboriosam vel eaque et!</p>
-          <p>Lorem ipsum dolor sit amet, consectetur <span class="mq-cursor"></span>adipisicing elit. Exercitationem, laborum quisquam deserunt obcaecati delectus excepturi earum veniam aliquam omnis quia nemo nisi quibusdam minima voluptatum corrupti! Minus quidem nisi consectetur.</p>
+          <p>L<span class="mq-cursor"></span>orem ipsum dolor sit amet, consectetur adipisicing elit. Iste, alias, aperiam expedita illo beatae blanditiis dolorem sint maxime harum minima perferendis deleniti mollitia. Tempore illum laudantium laboriosam vel eaque et!</p>
+          <p><span class="mq-cursor"></span>Lorem ipsum dolor sit amet, consectetur <span class="mq-cursor"></span>adipisicing elit. Exercitationem, laborum quisquam deserunt obcaecati delectus excepturi earum veniam aliquam omnis quia nemo nisi quibusdam minima voluptatum corrupti! Minus quidem nisi consectetur.</p>
       </div>
        -->
 
-    <p ng-repeat="field in fields">
+    <div ng-repeat="field in fields">
       <mq-mathfield class="my-math-input" ng-model="field" on-enter-key="onEnterKey(field)" on-move-out="onMoveOut(field, direction)"
         on-delete-out="onDeleteOut(field, direction)" on-focus-change="onFocusChange(field, hasFocus)"></mq-mathfield>
-    </p>
+    </div>
 
     <!--<pre><code>{{ fields | json }}</code></pre>-->
   </div>

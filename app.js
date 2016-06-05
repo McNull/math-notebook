@@ -131,18 +131,29 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
     if (hasFocus) {
       lastFocus = field;
     }
+    
+    console.log(hasFocus, lastFocus);
+    
   };
 
   let lastFocus = null;
-
-  $($window).focus(() => {
-    if (lastFocus) {
-      $timeout(() => {
-        lastFocus.focus = true;
-      });
+  
+  
+  function ensureFocus() {
+    
+    if(!lastFocus) {
+      lastFocus = fields[0];
     }
-  });
+    
+    $timeout(() => {
+      lastFocus.focus = true;
+    });
+  
+  }
 
+  $($window).focus(ensureFocus);
+  $($window).click(ensureFocus);
+  
 });
 
 
