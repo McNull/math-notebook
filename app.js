@@ -234,7 +234,7 @@ mod.directive('mqMathfield', function ($timeout, $compile) {
       var mathfield = MQ.MathField($element[0], {
 
         substituteTextarea: substituteTextarea,
-        autoCommands: 'alpha beta sqrt theta phi pi tau nthroot sum prod',
+        autoCommands: 'alpha beta sqrt theta phi pi tau nthroot sum prod div',
         handlers: {
 
           deleteOutOf: function (direction) {
@@ -271,7 +271,6 @@ mod.directive('mqMathfield', function ($timeout, $compile) {
             (function (latex) {
               if (latex !== $scope.field.expression) {
                 $timeout(function () {
-                  console.log('setting scope: ' + latex);
                   $scope.field.expression = latex;
                 });
               }
