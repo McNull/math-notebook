@@ -6,7 +6,7 @@ const electronLocalshortcut = require('electron-localshortcut');
 
 let mainWindow;
 
-Menu.setApplicationMenu((Menu.buildFromTemplate([])));
+//Menu.setApplicationMenu((Menu.buildFromTemplate([])));
 
 function createMainWindow() {
 

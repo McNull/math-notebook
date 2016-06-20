@@ -56,12 +56,11 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
 
     var zoomLevel = JSON.parse(localStorage.getItem('mathquill-zoomlevel')) || webFrame.getZoomLevel();
     webFrame.setZoomLevel(zoomLevel);
-  } 
-  catch (e)
-  {
+  }
+  catch (e) {
     console.log(e);
   }
-  
+
   $scope.saveAll = function () {
     localStorage.setItem('mathquill-fields', JSON.stringify(fields));
     localStorage.setItem('mathquill-zoomlevel', webFrame.getZoomLevel());
@@ -82,18 +81,18 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
     if (idx >= 0) {
       $timeout(() => {
         fields.splice(idx, 0, {});
-        fields[idx].focus = true;  
+        fields[idx].focus = true;
       });
     }
   });
-  
+
   ipcRenderer.on('createNewDown', () => {
     var idx = fields.findIndex((x) => x.focus);
 
     if (idx >= 0) {
       $timeout(() => {
         fields.splice(idx + 1, 0, {});
-        fields[idx + 1].focus = true;  
+        fields[idx + 1].focus = true;
       });
     }
   });
@@ -272,6 +271,7 @@ mod.directive('mqMathfield', function ($timeout, $compile) {
             (function (latex) {
               if (latex !== $scope.field.expression) {
                 $timeout(function () {
+                  console.log('setting scope: ' + latex);
                   $scope.field.expression = latex;
                 });
               }
@@ -280,18 +280,27 @@ mod.directive('mqMathfield', function ($timeout, $compile) {
         }
       });
 
-      $scope.$watch('field.expression', function (x) {
+      function setFieldLatex(latex) {
 
-        if (x !== undefined) {
-
-          var latex = mathfield.latex();
-
-          if (latex !== x) {
-            mathfield.latex(x);
-          }
+        if (setFieldLatex.timeout) {
+          $timeout.cancel(setFieldLatex.timeout);
         }
 
-      });
+        if (latex !== undefined) {
+          (function (latex) {
+            setFieldLatex.timeout = $timeout(function () {
+              var currentValue = mathfield.latex();
+
+              if (currentValue !== latex) {
+                mathfield.latex(latex);
+              }
+            });
+          })(latex);
+        }
+
+      }
+
+      $scope.$watch('field.expression', setFieldLatex);
 
       $scope.$watch('field.focus', function (x) {
         if (x) {
