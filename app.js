@@ -41,19 +41,30 @@ var myApp = angular.module('myApp', ['mathquill']);
 
 myApp.controller('MyController', function ($scope, $window, $timeout) {
 
+  fields = [{}];
 
-  var fields = JSON.parse(localStorage.getItem('mathquill-fields')) || [{
-    expression: '\\sum_{k=1}^3\\sqrt{\\left(k+k\\right)^2}'
-  }, {
-      expression: '\\left[x^n+y^n=z^n\\right]'
+  try {
+    fields = JSON.parse(localStorage.getItem('mathquill-fields')) || [{
+      expression: '\\sum_{k=1}^3\\sqrt{\\left(k+k\\right)^2}'
     }, {
-      expression: '\\alpha\\ \\beta\\ \\gamma\\ \\rho\\ \\sigma\\ \\delta\\ \\epsilon'
-    }];
+        expression: '\\left[x^n+y^n=z^n\\right]'
+      }, {
+        expression: '\\alpha\\ \\beta\\ \\gamma\\ \\rho\\ \\sigma\\ \\delta\\ \\epsilon'
+      }];
 
-  $scope.fields = fields;
+    $scope.fields = fields;
 
+    var zoomLevel = JSON.parse(localStorage.getItem('mathquill-zoomlevel')) || webFrame.getZoomLevel();
+    webFrame.setZoomLevel(zoomLevel);
+  } 
+  catch (e)
+  {
+    console.log(e);
+  }
+  
   $scope.saveAll = function () {
     localStorage.setItem('mathquill-fields', JSON.stringify(fields));
+    localStorage.setItem('mathquill-zoomlevel', webFrame.getZoomLevel());
   };
 
   $window.onbeforeunload = () => {
@@ -64,6 +75,28 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
     $scope.fields = fields = [{}];
     localStorage.removeItem('mathquill-fields');
   };
+
+  ipcRenderer.on('createNewUp', () => {
+    var idx = fields.findIndex((x) => x.focus);
+
+    if (idx >= 0) {
+      $timeout(() => {
+        fields.splice(idx, 0, {});
+        fields[idx].focus = true;  
+      });
+    }
+  });
+  
+  ipcRenderer.on('createNewDown', () => {
+    var idx = fields.findIndex((x) => x.focus);
+
+    if (idx >= 0) {
+      $timeout(() => {
+        fields.splice(idx + 1, 0, {});
+        fields[idx + 1].focus = true;  
+      });
+    }
+  });
 
   function focusNext(field, direction) {
     var idx = fields.indexOf(field) + direction;
@@ -131,29 +164,26 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
     if (hasFocus) {
       lastFocus = field;
     }
-    
-    console.log(hasFocus, lastFocus);
-    
   };
 
   let lastFocus = null;
-  
-  
+
+
   function ensureFocus() {
-    
-    if(!lastFocus) {
+
+    if (!lastFocus) {
       lastFocus = fields[0];
     }
-    
+
     $timeout(() => {
       lastFocus.focus = true;
     });
-  
+
   }
 
   $($window).focus(ensureFocus);
   $($window).click(ensureFocus);
-  
+
 });
 
 
@@ -205,7 +235,7 @@ mod.directive('mqMathfield', function ($timeout, $compile) {
       var mathfield = MQ.MathField($element[0], {
 
         substituteTextarea: substituteTextarea,
-
+        autoCommands: 'alpha beta sqrt theta phi pi tau nthroot sum prod',
         handlers: {
 
           deleteOutOf: function (direction) {

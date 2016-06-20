@@ -24,7 +24,7 @@
       </div>
        -->
 
-    <div ng-repeat="field in fields">
+    <div ng-repeat="field in fields track by $index">
       <mq-mathfield class="my-math-input" ng-model="field" on-enter-key="onEnterKey(field)" on-move-out="onMoveOut(field, direction)"
         on-delete-out="onDeleteOut(field, direction)" on-focus-change="onFocusChange(field, hasFocus)"></mq-mathfield>
     </div>

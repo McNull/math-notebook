@@ -30,6 +30,14 @@ function createMainWindow() {
   electronLocalshortcut.register(mainWindow, 'CommandOrControl+-', () => {
     mainWindow.webContents.send('zoomOut');    
   });
+  
+  electronLocalshortcut.register(mainWindow, 'CommandOrControl+Up', () => {
+    mainWindow.webContents.send('createNewUp');    
+  });
+  
+  electronLocalshortcut.register(mainWindow, 'CommandOrControl+Down', () => {
+    mainWindow.webContents.send('createNewDown');    
+  });
 
   // electronLocalshortcut.register(mainWindow, 'Ctrl+B', () => {
   //   console.log('You pressed ctrl & B');
