@@ -1,4 +1,5 @@
-
+// http://stackoverflow.com/questions/19992821/evaluating-latex-math-in-javascript
+// https://news.ycombinator.com/item?id=11369540
 // window.$ = window.jQuery = require('jquery');
 // window.angular = require('angular');
 // window.MathQuill = require('./lib/mathquill/mathquill.js');
@@ -234,7 +235,8 @@ mod.directive('mqMathfield', function ($timeout, $compile) {
       var mathfield = MQ.MathField($element[0], {
 
         substituteTextarea: substituteTextarea,
-        autoCommands: 'alpha beta sqrt theta phi pi tau nthroot sum prod div',
+        autoCommands: 'SHOULDNEVERHAPPEN', // 'alpha beta sqrt theta phi pi tau nthroot sum prod div',
+        autoOperatorNames: 'SHOULDNEVERHAPPEN',
         handlers: {
 
           deleteOutOf: function (direction) {
