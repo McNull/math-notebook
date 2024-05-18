@@ -4,6 +4,7 @@
   "short_name": "MathNotebook",
   "start_url": "./index.html",
   "display": "standalone",
+  "theme_color": "#f2f2f2",
   "background_color": " #f2f2f2",
   "description": "A zen math notebook that works offline",
   "icons": [{
@@ -26,6 +27,5 @@
     "src": "./icons/icon-256x256.png",
     "sizes": "256x256",
     "type": "image/png"
-  }],
-  "theme_color": "#333"
+  }]
 }

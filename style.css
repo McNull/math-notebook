@@ -115,6 +115,7 @@ body {
 }
 
 .math-lines {
+  padding-top: 2rem;
   height: 100%;
   overflow-y: scroll;
 }
