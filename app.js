@@ -1,43 +1,3 @@
-// http://stackoverflow.com/questions/19992821/evaluating-latex-math-in-javascript
-// https://news.ycombinator.com/item?id=11369540
-// window.$ = window.jQuery = require('jquery');
-// window.angular = require('angular');
-// window.MathQuill = require('./lib/mathquill/mathquill.js');
-
-
-// Code goes here
-
-
-
-
-//   console.log('ready');
-
-//   // const electronLocalshortcut = require('electron-localshortcut');
-
-//   // electronLocalshortcut.register(win, 'Ctrl+A', () => {
-//   //  console.log('You pressed ctrl & A');
-//   // });
-
-
-// const electron = require('electron');
-// const { ipcRenderer, webFrame } = electron;
-
-// ipcRenderer.on('zoomIn', () => {
-//   webFrame.setZoomLevel(webFrame.getZoomLevel() + 1);
-// });
-
-// ipcRenderer.on('zoomOut', () => {
-//   webFrame.setZoomLevel(webFrame.getZoomLevel() - 1);
-// });
-
-
-// webFrame.setZoomFactor(2);
-
-// document.onkeydown = (e) => {
-//   console.log(e);
-// };
-
-
 var myApp = angular.module('myApp', ['mathquill']);
 
 myApp.controller('MyController', function ($scope, $window, $timeout) {
@@ -54,9 +14,6 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
       }];
 
     $scope.fields = fields;
-
-    // var zoomLevel = JSON.parse(localStorage.getItem('mathquill-zoomlevel')) || webFrame.getZoomLevel();
-    // webFrame.setZoomLevel(zoomLevel);
   }
   catch (e) {
     console.log(e);
@@ -75,30 +32,6 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
     $scope.fields = fields = [{}];
     localStorage.removeItem('mathquill-fields');
   };
-
-  /* FIXME */ 
-
-  // ipcRenderer.on('createNewUp', () => {
-  //   var idx = fields.findIndex((x) => x.focus);
-
-  //   if (idx >= 0) {
-  //     $timeout(() => {
-  //       fields.splice(idx, 0, {});
-  //       fields[idx].focus = true;
-  //     });
-  //   }
-  // });
-
-  // ipcRenderer.on('createNewDown', () => {
-  //   var idx = fields.findIndex((x) => x.focus);
-
-  //   if (idx >= 0) {
-  //     $timeout(() => {
-  //       fields.splice(idx + 1, 0, {});
-  //       fields[idx + 1].focus = true;
-  //     });
-  //   }
-  // });
 
   function focusNext(field, direction) {
     var idx = fields.indexOf(field) + direction;

@@ -1,0 +1,21 @@
+hoistPattern:
+  - '*'
+hoistedDependencies: {}
+included:
+  dependencies: true
+  devDependencies: true
+  optionalDependencies: true
+injectedDeps: {}
+layoutVersion: 5
+nodeLinker: isolated
+packageManager: pnpm@8.15.4
+pendingBuilds: []
+prunedAt: Sat, 18 May 2024 08:14:00 GMT
+publicHoistPattern:
+  - '*eslint*'
+  - '*prettier*'
+registries:
+  default: https://registry.npmjs.org/
+skipped: []
+storeDir: /Users/null/Library/pnpm/store/v3
+virtualStoreDir: .pnpm
