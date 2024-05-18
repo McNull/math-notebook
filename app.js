@@ -19,16 +19,16 @@
 //   // });
 
 
-const electron = require('electron');
-const { ipcRenderer, webFrame } = electron;
+// const electron = require('electron');
+// const { ipcRenderer, webFrame } = electron;
 
-ipcRenderer.on('zoomIn', () => {
-  webFrame.setZoomLevel(webFrame.getZoomLevel() + 1);
-});
+// ipcRenderer.on('zoomIn', () => {
+//   webFrame.setZoomLevel(webFrame.getZoomLevel() + 1);
+// });
 
-ipcRenderer.on('zoomOut', () => {
-  webFrame.setZoomLevel(webFrame.getZoomLevel() - 1);
-});
+// ipcRenderer.on('zoomOut', () => {
+//   webFrame.setZoomLevel(webFrame.getZoomLevel() - 1);
+// });
 
 
 // webFrame.setZoomFactor(2);
@@ -55,8 +55,8 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
 
     $scope.fields = fields;
 
-    var zoomLevel = JSON.parse(localStorage.getItem('mathquill-zoomlevel')) || webFrame.getZoomLevel();
-    webFrame.setZoomLevel(zoomLevel);
+    // var zoomLevel = JSON.parse(localStorage.getItem('mathquill-zoomlevel')) || webFrame.getZoomLevel();
+    // webFrame.setZoomLevel(zoomLevel);
   }
   catch (e) {
     console.log(e);
@@ -64,7 +64,7 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
 
   $scope.saveAll = function () {
     localStorage.setItem('mathquill-fields', JSON.stringify(fields));
-    localStorage.setItem('mathquill-zoomlevel', webFrame.getZoomLevel());
+    // localStorage.setItem('mathquill-zoomlevel', webFrame.getZoomLevel());
   };
 
   $window.onbeforeunload = () => {
@@ -76,27 +76,29 @@ myApp.controller('MyController', function ($scope, $window, $timeout) {
     localStorage.removeItem('mathquill-fields');
   };
 
-  ipcRenderer.on('createNewUp', () => {
-    var idx = fields.findIndex((x) => x.focus);
+  /* FIXME */ 
 
-    if (idx >= 0) {
-      $timeout(() => {
-        fields.splice(idx, 0, {});
-        fields[idx].focus = true;
-      });
-    }
-  });
+  // ipcRenderer.on('createNewUp', () => {
+  //   var idx = fields.findIndex((x) => x.focus);
 
-  ipcRenderer.on('createNewDown', () => {
-    var idx = fields.findIndex((x) => x.focus);
+  //   if (idx >= 0) {
+  //     $timeout(() => {
+  //       fields.splice(idx, 0, {});
+  //       fields[idx].focus = true;
+  //     });
+  //   }
+  // });
 
-    if (idx >= 0) {
-      $timeout(() => {
-        fields.splice(idx + 1, 0, {});
-        fields[idx + 1].focus = true;
-      });
-    }
-  });
+  // ipcRenderer.on('createNewDown', () => {
+  //   var idx = fields.findIndex((x) => x.focus);
+
+  //   if (idx >= 0) {
+  //     $timeout(() => {
+  //       fields.splice(idx + 1, 0, {});
+  //       fields[idx + 1].focus = true;
+  //     });
+  //   }
+  // });
 
   function focusNext(field, direction) {
     var idx = fields.indexOf(field) + direction;

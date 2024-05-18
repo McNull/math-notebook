@@ -1,0 +1,21 @@
+{
+  "name": "math-notebook",
+  "productName": "Math Notebook",
+  "version": "0.1.0",
+  "description": "Math expression notebook",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "karma start"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.5.6",
+    "electron-localshortcut": "^0.6.0",
+    "jquery": "^2.2.4"
+  },
+  "devDependencies": {
+    "electron-prebuilt": "^1.2.1"
+  }
+}
