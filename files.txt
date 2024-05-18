@@ -1,0 +1,18 @@
+ ./lib/jquery/dist/jquery.js
+./lib/angular/angular.js
+./lib/mathquill/mathquill.js
+./lib/mathquill/mathquill.css
+./lib/mathquill/font/Symbola-basic.eot
+./lib/mathquill/font/Symbola-basic.ttf
+./lib/mathquill/font/Symbola-basic.woff
+./lib/mathquill/font/Symbola-basic.woff2
+./lib/mathquill/font/Symbola.eot
+./lib/mathquill/font/Symbola.otf
+./lib/mathquill/font/Symbola.svg
+./lib/mathquill/font/Symbola.ttf
+./lib/mathquill/font/Symbola.woff
+./lib/mathquill/font/Symbola.woff2
+./app.js
+./help.js
+./index.html
+./style.css

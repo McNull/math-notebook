@@ -1,22 +1,127 @@
-html, body {
+html,
+body {
   height: 100%;
+  padding: 0;
+  margin: 0;
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 html {
   box-sizing: border-box;
 }
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
-
 body {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   color: #333;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
+.container {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 4rem;
+  padding: 1rem;
+  background-color: transparent;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.toolbar button {
+  
+  height: 2rem;
+  width: 2rem;
+
+  background-color: #f2f2f2;
+  border: solid 1px #333;
+  border-radius: 0.15rem;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 250ms, color 250ms;
+  pointer-events: all;
+}
+
+.toolbar button:hover {
+  background-color: #333;
+  color: #f2f2f2;
+}
+
+.content {
+  flex-grow: 1;
+  max-width: 720px;
+  height: 100%;
+  position: relative;
+}
+
+.help-screen {
+  background-color: #f2f2f2;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  overflow-y: scroll;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 500ms;
+  pointer-events: none;
+}
+
+.help-screen.active {
+  pointer-events: inherit;
+  opacity: 1;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.help-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.help-table th {
+  text-align: left;
+  border-bottom: solid 1px #333;
+}
+
+.help-table td {
+  padding-left: 1rem;
+}
+
+.help-table td.html {
+  text-align: right;
+  padding-right: 1rem;
+}
+
+.math-lines {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.math-line {
+  margin-bottom: 1em;
+}
 
 .my-math-input {
   transition: opacity 500ms;
@@ -30,70 +135,32 @@ body {
   opacity: 0.8;
 }
 
-.my-math-input.mq-focused, .my-math-input .mq-text-mode.mq-hasCursor {
-  opacity: 1.0;
+.my-math-input.mq-focused,
+.my-math-input .mq-text-mode.mq-hasCursor {
+  opacity: 1;
   box-shadow: none;
   border: none;
 }
 
-.my-math-input .mq-scaled, .my-math-input .mq-non-leaf {
+.my-math-input .mq-scaled,
+.my-math-input .mq-non-leaf {
   transition: transform 250ms, background-color 250ms;
 }
-
- 
-
-/*::selection {
-  background-color: #B5E4F4;
-}*/
 
 .my-math-input .mq-cursor {
   transition: opacity 250ms;
   opacity: 0.6;
-  border-left-color: #00BDFC;
-  /*border-right: 1px solid #00BDFC;*/
-  /*margin-left: 1px;*/
-  /*margin-right: -1px;*/
+  border-left-color: #00bdfc;
+
   transform: scale(2.5, 1.5);
   width: 1px;
-  left:1px;
+  left: 1px;
 }
 .my-math-input.mq-editable-field .mq-cursor.mq-blink {
   visibility: visible;
-  opacity: 0.0;
+  opacity: 0;
 }
 
 .my-math-input .mq-matrixed {
   background: none;
 }
-
-/*@font-face {
-  font-family: Symbola;
-  src: url(font/Symbola.eot);
-  src: local("Symbola Regular"), local("Symbola"), url(font/Symbola.woff2) format("woff2"), url(font/Symbola.woff) format("woff"), url(font/Symbola.ttf) format("truetype"), url(font/Symbola.otf) format("opentype"), url(font/Symbola.svg#Symbola) format("svg");
-}
-
-.mq-editable-field .mq-latex-command-input {
-  font-family: "Courier New";
-}
-
-.mq-math-mode var,
-.mq-math-mode .mq-text-mode,
-.mq-math-mode .mq-nonSymbola {
-  font-family: "Courier New";
-}
-
-.mq-math-mode .mq-sans-serif {
-  font-family: "Courier New";
-}
-.mq-math-mode .mq-Courier New {
-  font-family: "Courier New";
-}
-
-.mq-math-mode .mq-operator-name {
-  font-family: Symbola, "Times New Roman", serif;
-}
-
-.mq-math-mode,
-.mq-math-mode .mq-editable-field {
-  font-family: "Courier New";
-}*/

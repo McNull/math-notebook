@@ -1,35 +1,74 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Math Notebook</title>
+    <link
+      rel="stylesheet"
+      href="./lib/mathquill/mathquill.css"
+    />
+    <link
+      rel="stylesheet"
+      href="./style.css"
+    />
+    <script src="./lib/jquery/dist/jquery.js"></script>
+    <script src="./lib/angular/angular.js"></script>
+    <script src="./lib/mathquill/mathquill.js"></script>
+    <script src="./help.js"></script>
+    <script src="./app.js"></script>
+    <link rel="manifest" href="/manifest.json">
+  </head>
 
-<head>
-  <title>Math Notebook</title>
-  <link rel="stylesheet" href="./lib/mathquill/mathquill.css">
-  <link rel="stylesheet" href="./style.css">
-  <script src="node_modules/jquery/dist/jquery.js"></script>
-  <script src="node_modules/angular/angular.js"></script>
-  <script src="./lib/mathquill/mathquill.js"></script>
-  <script src="./app.js"></script>
-</head>
-
-<body ng-app='myApp'>
-
-
-  <div class="container" ng-controller="MyController">
-
-    <!--<div class="my-math-input mq-editable-field">
-          <p>L<span class="mq-cursor"></span>orem ipsum dolor sit amet, consectetur adipisicing elit. Iste, alias, aperiam expedita illo beatae blanditiis dolorem sint maxime harum minima perferendis deleniti mollitia. Tempore illum laudantium laboriosam vel eaque et!</p>
-          <p><span class="mq-cursor"></span>Lorem ipsum dolor sit amet, consectetur <span class="mq-cursor"></span>adipisicing elit. Exercitationem, laborum quisquam deserunt obcaecati delectus excepturi earum veniam aliquam omnis quia nemo nisi quibusdam minima voluptatum corrupti! Minus quidem nisi consectetur.</p>
+  <body ng-app="myApp">
+    <div
+      class="container"
+      ng-controller="MyController"
+    >
+      <div class="toolbar">
+        <button class="help">?</button>
       </div>
-       -->
 
-    <div ng-repeat="field in fields track by $index">
-      <mq-mathfield class="my-math-input" ng-model="field" on-enter-key="onEnterKey(field)" on-move-out="onMoveOut(field, direction)"
-        on-delete-out="onDeleteOut(field, direction)" on-focus-change="onFocusChange(field, hasFocus)"></mq-mathfield>
+      <div class="content">
+        <div class="help-screen">
+          <h1>Math Notebook</h1>
+          <div id="codes"></div>
+        </div>
+        <div class="math-lines">
+          <div
+            ng-repeat="field in fields track by $index"
+            class="math-line"
+          >
+            <mq-mathfield
+              class="my-math-input"
+              ng-model="field"
+              on-enter-key="onEnterKey(field)"
+              on-move-out="onMoveOut(field, direction)"
+              on-delete-out="onDeleteOut(field, direction)"
+              on-focus-change="onFocusChange(field, hasFocus)"
+            ></mq-mathfield>
+          </div>
+        </div>
+      </div>
     </div>
+    <script>
+      (function () {
+        help.init();
 
-    <!--<pre><code>{{ fields | json }}</code></pre>-->
-  </div>
-
-</body>
-
+        if ("serviceWorker" in navigator) {
+          window.addEventListener("load", function () {
+            navigator.serviceWorker.register("./service-worker.js").then(
+              function (registration) {
+                console.log(
+                  "ServiceWorker registration successful with scope: ",
+                  registration.scope
+                );
+              },
+              function (err) {
+                console.log("ServiceWorker registration failed: ", err);
+              }
+            );
+          });
+        }
+      })();
+    </script>
+  </body>
 </html>
